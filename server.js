@@ -24,7 +24,7 @@ app.route('/').get(function (req, res) {
     res.json('Express server working without any problem');
 });
 
-app.route('/addEmployee').post(function (req, res) {
+app.route('/addArticle').post(function (req, res) {
     let reqs = req.body;
     let article = new Article(reqs);
     article.save()
@@ -36,7 +36,7 @@ app.route('/addEmployee').post(function (req, res) {
         });
 });
 
-app.route('/Employees').get(function (req, res) {
+app.route('/articles').get(function (req, res) {
     Article.find({}, function (err, articles) {
         if (!err)
             res.status(200).json(articles);
