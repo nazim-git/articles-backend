@@ -54,13 +54,13 @@ app.route('/article/:id').get(function (req, res) {
     });
 });
 
-app.route('/updateEmployee/:article_id').post(function (req, res) {
+app.route('/updateArticle/:article_id').post(function (req, res) {
     Article.findOneAndUpdate({ _id: req.params.article_id }, { $set: req.body })
         .then(_ => res.status(200).json("Atricle Update sucessfull"))
         .catch(err => res.status(400).send(err))
 });
 
-app.route('/deleteEmployee/:article_id').delete(function (req, res) {
+app.route('/deleteArticle/:article_id').delete(function (req, res) {
     Article.remove({ _id: req.params.article_id })
         .then(_ => res.status(200).json("Atricle Delete sucessfull"))
         .catch(err => res.status(400).send(err))
