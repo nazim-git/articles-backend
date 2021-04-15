@@ -4,7 +4,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const appRoute = express.Router();
-const Employee = require('./schemas/Employee');
+const Article = require('./schemas/Article');
 var app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,10 +26,10 @@ app.route('/').get(function (req, res) {
 
 app.route('/addEmployee').post(function (req, res) {
     let reqs = req.body;
-    let employee = new Employee(reqs);
-    employee.save()
-        .then(employee => {
-            res.status(200).json(employee);
+    let article = new Article(reqs);
+    article.save()
+        .then(article => {
+            res.status(200).json(article);
         })
         .catch(err => {
             res.status(400).send(err);
@@ -37,32 +37,32 @@ app.route('/addEmployee').post(function (req, res) {
 });
 
 app.route('/Employees').get(function (req, res) {
-    Employee.find({}, function (err, employees) {
+    Article.find({}, function (err, articles) {
         if (!err)
-            res.status(200).json(employees);
+            res.status(200).json(articles);
         else
             res.status(400).json(err);
     });
 });
 
-app.route('/employee/:id').get(function (req, res) {
-    Employee.findOne(req.param.id, function (err, employee) {
+app.route('/article/:id').get(function (req, res) {
+    Article.findOne(req.param.id, function (err, article) {
         if (!err)
-            res.json(employee);
+            res.json(article);
         else
             res.json(err);
     });
 });
 
-app.route('/updateEmployee/:employee_id').post(function (req, res) {
-    Employee.findOneAndUpdate({ _id: req.params.employee_id }, { $set: req.body })
-        .then(_ => res.status(200).json("Employee Update sucessfull"))
+app.route('/updateEmployee/:article_id').post(function (req, res) {
+    Article.findOneAndUpdate({ _id: req.params.article_id }, { $set: req.body })
+        .then(_ => res.status(200).json("Atricle Update sucessfull"))
         .catch(err => res.status(400).send(err))
 });
 
-app.route('/deleteEmployee/:employee_id').delete(function (req, res) {
-    Employee.remove({ _id: req.params.employee_id })
-        .then(_ => res.status(200).json("Employee Delete sucessfull"))
+app.route('/deleteEmployee/:article_id').delete(function (req, res) {
+    Article.remove({ _id: req.params.article_id })
+        .then(_ => res.status(200).json("Atricle Delete sucessfull"))
         .catch(err => res.status(400).send(err))
 });
 
